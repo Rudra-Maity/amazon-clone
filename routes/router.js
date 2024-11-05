@@ -6,6 +6,7 @@ const Razorpay = require('razorpay');
 const bcrypt = require('bcryptjs');
 const authenticate = require('../middleware/authenticate');
 const { check, validationResult } = require('express-validator');
+const jwt=require('../middleware/jwt')
 
 // Get products API
 router.get("/products", async function(req, res) {
@@ -120,9 +121,7 @@ router.post('/register', [
     }
 })
 
-// Post registered data / login 
 router.post('/login', [
-    // Check fields validation
     check('email').not().isEmpty().withMessage("Email can't be empty")
                     .isEmail().withMessage("Email format invalid")
                     .normalizeEmail(),
@@ -161,7 +160,7 @@ router.post('/login', [
               if(result) {
 
                 // Token generation
-                const token = await found.generateAuthToken();
+                const token = jwt.generateToken({_id:found._id});
 
                 // Cookie generation
                 res.cookie("AmazonClone", token, {

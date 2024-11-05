@@ -36,14 +36,15 @@ const SignUp = () => {
     const { name, number, email, password, confirmPassword } = signUpInfo;
 
     try {
-      const res = await axios.post('https://amazonclone-sp.herokuapp.com/api/register', { 
+      const res = await axios.post('/api/register', { 
         name, number, email, password, confirmPassword
       }, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
-
+      console.log(res);
+      
       setSignUpInfo(function() {
         return {
           ...signUpInfo,
@@ -59,6 +60,8 @@ const SignUp = () => {
       }, 1000)
 
     } catch(error) {
+      console.log(error);
+      
       if(error.response) {
         document.querySelector(".success-alert").style.display = "none";
         document.querySelector(".error-alert").style.display = "flex";

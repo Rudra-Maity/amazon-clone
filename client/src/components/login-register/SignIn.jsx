@@ -31,11 +31,10 @@ const SignIn = () => {
     const { email, password } = signInInfo; 
 
     try {
-      const res = await axios.post("https://amazonclone-sp.herokuapp.com/api/login", {
+      const res = await axios.post("/api/login", {
         email, password
       }, {
         headers: {
-          'Access-Control-Allow-Origin': 'http://localhost:3000',
           'Content-Type': 'application/json'
         },
         withCredentials: true // Cookie credentials (tokens)
@@ -57,6 +56,7 @@ const SignIn = () => {
 
     } catch (error) {
       try {
+        
         document.querySelector(".success-alert").style.display = "none";
         document.querySelector(".error-alert").style.display = "flex";
         const errors = error.response.data.message;
